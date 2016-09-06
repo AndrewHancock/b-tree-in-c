@@ -14,20 +14,13 @@ int cmp_int(const void *left, const void *right) {
 	return (*(int *)left - *(int *)right);
 }
 
-void print_element(struct element *element) {
-	printf("Key: %s Value: %s\n", (char *)element->key, (char *)element->value);
-}
+
 
 void print_node(struct node *node) {
-	int i;
-
-	for(i = 0; i < node->element_list->size; i++ ) {
-		print_element(node->element_list->elements[i]);
-	}
+	print_list(node->element_list);
 }
 void print_tree(struct tree *tree) {
-	printf("Root: \n");
-	print_node(tree->root);
+	print_list(tree->root->element_list);
 }
 
 void print_list(struct array_list *list) {
@@ -76,12 +69,16 @@ void test_list() {
 void test_tree() {
 	struct element *test_element;
 	struct tree *test_tree;
-	test_element = create_element("Fred", "A guy named fred.");
+	int *key;
+	key = malloc(sizeof(int));
+	*key = 5;
+	test_element = create_element(key, "A guy named fred.");
 
 	test_tree = create_tree();
 	add_element_to_tree(test_tree, test_element, cmp_str);
-
-	test_element = create_element("George", "A guy named george.");
+	key = malloc(sizeof(int));
+	*key = 6;
+	test_element = create_element(key, "A guy named george.");
 	add_element_to_tree(test_tree, test_element, cmp_str);
 
 	print_tree(test_tree);
@@ -89,12 +86,12 @@ void test_tree() {
 
 int main(int argc, const char * argv[])
 {
-	printf("=======================\n");
+	printf("\n=======================\n");
 	printf("===List Tests       ===\n");
 	printf("=======================\n");
 	test_list();
 
-	printf("=======================\n");
+	printf("\n=======================\n");
 	printf("===Tree Tests       ===\n");
 	printf("=======================\n");
 
